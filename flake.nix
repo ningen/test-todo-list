@@ -7,8 +7,15 @@
     devshell.url = "github:numtide/devshell";
   };
 
-  outputs = { self, nixpkgs, flake-utils, devshell }:
-    flake-utils.lib.eachDefaultSystem (system:
+  outputs =
+    {
+      self,
+      nixpkgs,
+      flake-utils,
+      devshell,
+    }:
+    flake-utils.lib.eachDefaultSystem (
+      system:
       let
         pkgs = import nixpkgs {
           inherit system;
@@ -18,8 +25,9 @@
       {
         devShell = pkgs.devshell.mkShell {
           packages = with pkgs; [
-            nodejs_24
+            nodejs_22
           ];
         };
-      });
+      }
+    );
 }
