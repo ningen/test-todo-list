@@ -1,6 +1,7 @@
 name = "test-todo-app"
 compatibility_date = "2023-10-30"
-pages_build_output_dir = "./build/client"
+pages_build_output_dir = "build/client"
 
 [build]
-command = "npm run pages:build"
+command = "npm run build"
+cwd = "."
