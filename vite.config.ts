@@ -1,6 +1,9 @@
 import { vitePlugin as remix } from "@remix-run/dev";
+import { installGlobals } from "@remix-run/node";
 import { defineConfig } from "vite";
 import tsconfigPaths from "vite-tsconfig-paths";
+
+installGlobals();
 
 declare module "@remix-run/node" {
   interface Future {
@@ -18,7 +21,19 @@ export default defineConfig({
         v3_singleFetch: true,
         v3_lazyRouteDiscovery: true,
       },
+      serverModuleFormat: "esm",
     }),
     tsconfigPaths(),
   ],
+  ssr: {
+    resolve: {
+      conditions: ["workerd", "worker", "browser"],
+    },
+  },
+  resolve: {
+    mainFields: ["browser", "module", "main"],
+  },
+  define: {
+    global: "globalThis",
+  },
 });
